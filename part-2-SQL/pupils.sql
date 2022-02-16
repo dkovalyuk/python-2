@@ -1,5 +1,59 @@
 pragma foreign_keys = on
 
+----------------------------------
+-- 1. Написати запит, який вставляє запис (INSERT INTO) в таблицю pupils 
+
+INSERT INTO pupils(name, birthday, gender)
+VALUES('Oleg', '2000-01-01', 1);
+
+
+-- 2. Написати запит, який вставляє запис (INSERT INTO) в таблицю courses 
+INSERT INTO courses
+VALUES(5, 'AI', 0, 'python');
+
+
+-- 3. Написти запит, який оновлює (UPDATE) дані в таблиці courses
+UPDATE courses
+SET title='Artificial Intelligence'
+WHERE id=5;
+
+UPDATE courses
+SET lang='Java Script', is_children = 0
+WHERE id IN (13,14);
+
+
+-- 4. Написати запит, який вибирає найбільший бал з курсу Python
+SELECT MAX(rating) FROM school s 
+WHERE course_id in (SELECT id FROM courses c WHERE lang = 'python')
+
+
+-- 5. Написати запит, який виводить курси, які пройшли студенти зі Львова
+SELECT c.title as course_title
+  FROM courses c, school s, pupils_address pa
+ WHERE pa.id = s.pupil_id
+   AND s.course_id = c.id
+   AND address = 'Львів'
+   ORDER BY course_title
+
+
+-- 6. Написати запит, який виводить інформацію про курси дівчат, відсортовані по спаданню
+SELECT c.title as course_title
+  FROM courses c, school s, pupils p
+ WHERE p.id = s.pupil_id
+   AND s.course_id = c.id
+   AND gender = 2
+   ORDER BY course_title
+   
+   
+   
+-- 7. Написти запит, який видаляє запис про навчання студента (таблиця school) за його іменем 
+  
+DELETE FROM school
+WHERE pupil_id IN (SELECT id FROM pupils p WHERE name LIKE 'Сідоров%');
+
+
+
+----------------------------------------------------------------------------------------------
 
 SELECT DISTINCT pupil_id FROM school s  ORDER BY pupil_id 
 
@@ -83,6 +137,22 @@ WHERE lang = 'python';
 
 
 DELETE FROM pupils WHERE id = 25;
+
+
+SELECT * FROM pupils p order by id 
+ LIMIT 2 
+OFFSET 3
+
+
+
+
+
+
+
+
+
+
+
 
 
 
